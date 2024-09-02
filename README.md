@@ -67,4 +67,62 @@ variable "vm_web_platform" {
 ![image](https://github.com/user-attachments/assets/076c1528-d195-4eca-8bf4-8ae2b2d4a1a9)
 
 # Задание 3.
+https://github.com/starky29/terra-2/blob/main/vms_platform.tf
+## main.cf:
+resource "yandex_vpc_network" "develop_db" {
+  name = var.vm_db_vpc_name
+}
+resource "yandex_vpc_subnet" "develop_db" {
+  name           = var.vm_db_vpc_name
+  zone           = var.zone_b
+  network_id     = yandex_vpc_network.develop_db.id
+  v4_cidr_blocks = var.default_cidr
+}
+
+resource "yandex_compute_instance" "platform_db" {
+  name        = var.vm_db_name
+  platform_id = var.vm_db_platform[0]
+  zone = var.zone_b
+  resources {
+    cores         = var.vm_db_platform[1]
+    memory        = var.vm_db_platform[2]
+    core_fraction = var.vm_db_platform[3]
+  }
+  boot_disk {
+    initialize_params {
+      image_id = data.yandex_compute_image.ubuntu.image_id
+    }
+  }
+  scheduling_policy {
+    preemptible = var.vm_db_platform[4]
+  }
+  network_interface {
+    subnet_id = yandex_vpc_subnet.develop_db.id
+    nat       = var.vm_db_platform[5]
+  }
+
+  metadata = {
+    serial-port-enable = 1
+    ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
+    
+  }
+
+}
+
+![image](https://github.com/user-attachments/assets/294e45ea-d2c8-4894-bba8-99476cd4e828)
+
+# Задание 4. Объявите в файле outputs.tf один output , содержащий: instance_name, external_ip, fqdn для каждой из ВМ в удобном лично для вас формате.(без хардкода!!!)
+
+https://github.com/starky29/terra-2/blob/main/output.tf
+
+
+![image](https://github.com/user-attachments/assets/02983352-6b3e-4b68-bb6d-4d157b9ec836)
+
+# Задание 5. Локальные переменные
+https://github.com/starky29/terra-2/blob/main/locals.tf
+
+![image](https://github.com/user-attachments/assets/5e99313d-1552-4134-8348-3edba6ba92ed)
+
+# Задание 6. 
+
 
