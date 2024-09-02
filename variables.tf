@@ -1,6 +1,7 @@
 ###cloud vars
 variable "token" {
   type        = string
+  sensitive = true
   description = "OAuth-token; https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token"
 }
 
@@ -25,17 +26,11 @@ variable "default_cidr" {
   description = "https://cloud.yandex.ru/docs/vpc/operations/subnet-create"
 }
 
-variable "vpc_name" {
-  type        = string
-  default     = "develop"
-  description = "VPC network & subnet name"
-}
-
 
 ###ssh vars
 
-variable "vms_ssh_root_key" {
-  type        = string
-  default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPPRCaLLLFRjPylJ+2X+wh42P6rdIsX5nO1kmsDdJqWE starkov_aa@fedora"
-  description = "ssh-keygen -t ed25519"
-}
+# variable "vms_ssh_root_key" {
+#   type        = string
+#   default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPPRCaLLLFRjPylJ+2X+wh42P6rdIsX5nO1kmsDdJqWE starkov_aa@fedora"
+#   description = "ssh-keygen -t ed25519"
+# }
