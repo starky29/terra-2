@@ -1,4 +1,4 @@
-# terra-2
+# Основы Terraform. Yandex Cloud
 # Задание 1.
 4. Инициализируйте проект, выполните код. Исправьте намеренно допущенные синтаксические ошибки. Ищите внимательно, посимвольно. Ответьте, в чём заключается их суть.
 Ошибки заключались в блоке resource "yandex_compute_instance" "platform". Значения параметра platform_id = "standart-v4" не существует, существуют следующие https://yandex.cloud/ru/docs/compute/concepts/vm-platforms?utm_referrer=https%3A%2F%2Fgithub.com%2Fnetology-code%2Fter-homeworks%2Fissues%2F2. Так же необходимо поменять значения параметров cores на 2 (количество процессоров) и core_fraction (гарантированная доля vCPU) на 20.
@@ -127,6 +127,7 @@ https://github.com/starky29/terra-2/blob/main/locals.tf
 ![image](https://github.com/user-attachments/assets/5e99313d-1552-4134-8348-3edba6ba92ed)
 
 # Задание 6. 
+- Вместо использования трёх переменных ".._cores",".._memory",".._core_fraction" в блоке resources {...}, объедините их в единую map-переменную vms_resources и внутри неё конфиги обеих ВМ в виде вложенного map(object).
 Переменнная resources
 ```
 variable "vms_resources" {
@@ -159,6 +160,7 @@ variable "vms_resources" {
     description = "vms resources"
 }
 ```
+- Создайте и используйте отдельную map(object) переменную для блока metadata, она должна быть общая для всех ваших ВМ.
 Переменная metadata
 ```
 variable "vms_metadata" {
